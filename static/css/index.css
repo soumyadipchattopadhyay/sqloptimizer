@@ -18,6 +18,18 @@
     --border-btn: #C00000;
 }
 
+.app-logo {
+    height: 70px; /* Adjust this value depending on if your logo is tall or wide */
+    width: auto;
+    object-fit: contain;
+    margin-bottom: 15px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    /* Optional: If your logo is dark, this adds a very subtle shadow to lift it off the light background */
+    filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.05));
+}
+
 body {
     margin: 0;
     padding: 0;
