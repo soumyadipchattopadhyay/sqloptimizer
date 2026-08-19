@@ -19,7 +19,7 @@
 }
 
 .app-logo {
-    height: 70px; /* Adjust this value depending on if your logo is tall or wide */
+    height: 200px; /* Adjust this value depending on if your logo is tall or wide */
     width: auto;
     object-fit: contain;
     margin-bottom: 15px;
