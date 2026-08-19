@@ -2,7 +2,7 @@ import re
 from sqlglot import parse_one
 from sqlglot.errors import ParseError, TokenError, SqlglotError
 from app.schemas import FusionEbsRequest, FusionEbsResponse, ChatRequest, ChatResponse
-
+import os
 from google import genai
 from google.genai import types
 
@@ -11,7 +11,9 @@ DEFAULT_GEMINI_MODEL = "gemini-3.6-flash"
 
 # Initialize the GenAI Client
 # Automatically picks up GEMINI_API_KEY from the environment
-client = genai.Client()
+
+API_KEY = os.environ.get("GEMINI_API_KEY")
+client = genai.Client(api_key=API_KEY)
 
 def resolve_model_name(req_model: str) -> str:
     """
