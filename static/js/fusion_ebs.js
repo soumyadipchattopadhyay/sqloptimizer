@@ -98,6 +98,52 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('explanationOutput').innerHTML = '<p class="placeholder-text">Editor cleared.</p>';
     });
 
+    // NEW: Save/Export Code to .sql file
+    document.getElementById('saveCodeBtn').addEventListener('click', () => {
+        
+        console.log("Save button was clicked!");
+        const code = editor.getValue();
+
+        console.log("Got the code");
+
+        
+        if (!code.trim()) {
+            document.getElementById('explanationOutput').innerHTML = '<p style="color:#A30000;">Editor is empty. Nothing to save.</p>';
+            return;
+        }
+
+        // Generate timestamp (Format: YYYYMMDD_HHMMSS)
+        const now = new Date();
+        const timestamp = now.getFullYear().toString() +
+            (now.getMonth() + 1).toString().padStart(2, '0') +
+            now.getDate().toString().padStart(2, '0') + '_' +
+            now.getHours().toString().padStart(2, '0') +
+            now.getMinutes().toString().padStart(2, '0') +
+            now.getSeconds().toString().padStart(2, '0');
+        
+        console.log("Date Fixed");
+        const filename = `sqlator_export_${timestamp}.sql`;
+        console.log("Filename Fixed");
+        // Create a blob and trigger download
+        const blob = new Blob([code], { type: 'text/sql' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        console.log("kichu ekta cliked Fixed");
+
+        // Clean up the DOM and URL object
+        setTimeout(() => {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }, 0);
+
+        // Show success message
+        document.getElementById('explanationOutput').innerHTML = `<p style="color:#2E7D32;">Code successfully exported as <strong>${filename}</strong></p>`;
+    });
+
     // 6. AI Generator Modal
     const modal = document.getElementById('aiGenModal');
     document.getElementById('openAiGenModalBtn').addEventListener('click', () => modal.style.display = 'flex');
