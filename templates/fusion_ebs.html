@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oracle Fusion & EBS Query Workspace</title>
+    <!-- CodeMirror Editor CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
+    <!-- Marked.js Markdown Parser CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="/static/css/fusion_ebs.css">
+    
+    <!-- Add CSS for the typing animation -->
+    <style>
+        .typing-indicator {
+            display: none; /* Hidden by default */
+            gap: 4px;
+            padding: 12px 16px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 12px;
+            align-self: flex-start;
+            width: fit-content;
+            margin-top: 5px;
+        }
+        .typing-indicator.active {
+            display: flex;
+        }
+        .dot {
+            width: 6px;
+            height: 6px;
+            background-color: var(--text-muted);
+            border-radius: 50%;
+            animation: typingBlink 1.4s infinite ease-in-out both;
+        }
+        .dot:nth-child(1) { animation-delay: -0.32s; }
+        .dot:nth-child(2) { animation-delay: -0.16s; }
+        
+        @keyframes typingBlink {
+            0%, 80%, 100% { transform: scale(0); opacity: 0.3; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation Bar -->
+    <header class="top-nav">
+        <div class="nav-left">
+            <a href="/" class="back-btn" title="Return to the main Launchpad menu">← Launchpad</a>
+            <h2>Oracle Fusion & EBS Query Workspace</h2>
+        </div>
+        
+        <div class="nav-right">
+            <div class="toggle-container" title="Switch between Oracle EBS R12 and Fusion Cloud environments">
+                <span class="toggle-label" id="label-ebs">EBS R12</span>
+                <label class="switch">
+                    <input type="checkbox" id="systemToggle" checked>
+                    <span class="slider"></span>
+                </label>
+                <span class="toggle-label active" id="label-fusion">Fusion Cloud</span>
+            </div>
+            <div class="model-badge" title="Currently active AI Model">
+                Model: <span id="activeModelDisplay">gemini-2.5-flash</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace Area -->
+    <div class="workspace-container">
+        
+        <!-- Left Panel: Editor & Logs -->
+        <main class="editor-section">
+            
+            <div class="toolbar">
+                <div class="toolbar-left">
+                    <button class="btn btn-orange" id="openAiGenModalBtn" title="Generate a new SQL query from plain English">★ AI Generate</button>
+                    <button class="btn btn-dark" id="optimizeSqlBtn" title="Analyze and improve query performance and execution speed">Optimize Query</button>
+                    <button class="btn btn-dark" id="formatSqlBtn" title="Prettify and format the SQL code properly">Format SQL</button>
+                    <button class="btn btn-red" id="debugSqlBtn" title="Check for syntax errors and automatically fix them">Debug Query</button>
+                </div>
+                <div class="toolbar-right">
+                    <button class="btn btn-outline" id="copyCodeBtn" title="Copy code to clipboard">Copy Code</button>
+                    <button class="btn btn-outline" id="clearEditorBtn" title="Clear the editor workspace">Clear</button>
+                    <button class="btn btn-dark" id="toggleChatBtn" title="Show or hide the AI Chat Assistant">Toggle Chat</button>
+                </div>
+            </div>
+
+            <!-- Editor Window -->
+            <div class="code-editor-container">
+                <div class="editor-tab-bar">
+                    <div class="editor-tab active">
+                        <span style="color:#EB8C00;">📄</span>
+                        <span class="tab-title" id="activeFileTitle">query_workspace.sql</span>
+                        <span class="tab-status-dot"></span>
+                    </div>
+                    <div class="editor-header-actions">
+                        <span class="dialect-badge" id="dialectBadge">ORACLE SQL (FUSION)</span>
+                    </div>
+                </div>
+
+                <div class="code-editor-wrapper">
+                    <textarea id="sqlCodeEditor" placeholder="-- Write or generate your SQL query here..."></textarea>
+                </div>
+
+                <div class="editor-status-bar">
+                    <div class="status-left">
+                        <span class="status-item" id="cursorPos">Ln 1, Col 1</span>
+                        <span class="status-divider">|</span>
+                        <span class="status-item" id="lineCount">1 line</span>
+                        <span class="status-divider">|</span>
+                        <span class="status-item" id="selectionStatus">0 selected</span>
+                    </div>
+                    <div class="status-right">
+                        <span class="status-item">UTF-8</span>
+                        <span class="status-divider">|</span>
+                        <span class="status-item">Spaces: 4</span>
+                        <span class="status-divider">|</span>
+                        <span class="status-item status-ready">● Ready</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Horizontal Resizer (Drag up/down) -->
+            <div class="resizer-horizontal" id="bottomResizer"></div>
+
+            <!-- Explanation Panel -->
+            <div class="explanation-container" id="explanationContainer">
+                <div class="section-title">
+                    <span>AI EXPLANATION & OPTIMIZATION NOTES</span>
+                    <button class="toggle-panel-btn" id="toggleExplanationBtn" title="Expand or collapse panel">▼</button>
+                </div>
+                <div class="explanation-content" id="explanationOutput">
+                    <p class="placeholder-text">AI explanations, refactoring insights, or debug logs will appear here after executing an action.</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Vertical Resizer (Drag left/right) -->
+        <div class="resizer" id="sidebarResizer"></div>
+
+        <!-- Right Panel: Chatbot -->
+        <aside class="chatbot-sidebar" id="chatbotSidebar">
+            <div class="chat-header">
+                <h3>SQL Assistant Chat</h3>
+                <span class="chat-status" title="AI is connected and ready">Online</span>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-bubble bot">
+                    Hello! I'm your Oracle AI assistant. Ask me anything, or send SQL snippets to analyze, modify, or explain.
+                </div>
+                
+                <!-- Typing Indicator (Hidden by default) -->
+                <div class="typing-indicator" id="typingIndicator">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <textarea id="chatInput" placeholder="Ask AI or paste snippet to modify..." rows="3" title="Type your question or request here"></textarea>
+                <button id="sendChatBtn" class="btn btn-orange-full" title="Send message to AI">Send</button>
+            </div>
+        </aside>
+    </div>
+
+    <!-- AI Generator Modal -->
+    <div class="modal-overlay" id="aiGenModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 style="color:#EB8C00; margin:0;">Generate Query with AI</h3>
+                <button class="close-modal-btn" id="closeAiGenModalBtn" title="Close modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <label for="aiPromptInput" style="color:#A08C8A; font-size:12px;">Enter Query Business Requirement:</label>
+                <textarea id="aiPromptInput" rows="5" placeholder="e.g., Fetch active suppliers, tax registration numbers..."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-dark" id="cancelAiGenBtn" title="Cancel generation">Cancel</button>
+                <button class="btn btn-orange" id="submitAiGenBtn" title="Submit prompt to AI">Generate</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/sql/sql.min.js"></script>
+    <script src="/static/js/fusion_ebs.js"></script>
+</body>
+</html>

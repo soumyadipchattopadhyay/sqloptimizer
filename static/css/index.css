@@ -1,0 +1,207 @@
+:root {
+    /* Main Light Background */
+    --bg-main: #F8F8EE;
+    
+    /* Pure white for cards to pop against the slightly off-white background */
+    --bg-card: #FFFFFF;
+    
+    /* Text Colors for Light Theme */
+    --text-main: #333333;
+    --text-muted: #666666;
+    
+    /* Branding Colors (PwC Red & Orange) */
+    --primary-accent: #C00000;
+    --secondary-accent: #EB8C00;
+    
+    /* Borders */
+    --border-card: #DDDDDD;
+    --border-btn: #C00000;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.launchpad-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--primary-accent);
+    margin: 0 0 8px 0;
+}
+
+.header p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0 0 16px 0;
+}
+
+/* Model Selector Styling */
+.model-selector-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-card);
+    padding: 8px 16px;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.model-selector-container label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.model-select {
+    background-color: #FFFFFF;
+    color: var(--primary-accent);
+    border: 1px solid var(--border-card);
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.model-select:focus, 
+.model-select:hover {
+    border-color: var(--primary-accent);
+    background-color: var(--bg-main);
+}
+
+.model-select option {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+}
+
+/* Cards Layout */
+.cards-grid {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 1200px;
+}
+
+.card {
+    background-color: var(--bg-card);
+    border: 2px solid var(--border-card);
+    border-radius: 8px;
+    width: 360px;
+    padding: 25px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+}
+
+.card:hover {
+    border-color: var(--primary-accent);
+    background-color: #FFFFFF;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(192, 0, 0, 0.08);
+}
+
+.icon-badge {
+    width: 50px;
+    height: 50px;
+    background-color: var(--bg-main);
+    border: 2px solid var(--border-card);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+}
+
+.card:hover .icon-badge {
+    border-color: var(--primary-accent);
+    background-color: #FFF5F5;
+}
+
+.icon-badge svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--primary-accent);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+}
+
+.card-title {
+    font-size: 15px;
+    font-weight: bold;
+    color: var(--primary-accent);
+    text-align: center;
+    margin: 0 0 12px 0;
+    line-height: 1.3;
+}
+
+.card-desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+    margin: 0 0 20px 0;
+    line-height: 1.4;
+    flex-grow: 1;
+}
+
+.card-btn {
+    background-color: transparent;
+    border: 1px solid var(--border-btn);
+    color: var(--primary-accent);
+    font-weight: bold;
+    padding: 8px;
+    border-radius: 4px;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    transition: all 0.2s;
+    font-size: 13px;
+}
+
+.card:hover .card-btn {
+    background-color: var(--primary-accent);
+    color: #FFFFFF;
+}
+
+.footer {
+    text-align: center;
+    font-size: 11px;
+    font-weight: bold;
+    color: var(--text-muted);
+    padding: 10px 0 20px 0;
+}

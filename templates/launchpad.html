@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PwC SQLator - Launchpad</title>
+    <link rel="stylesheet" href="static/css/index.css">
+</head>
+<body>
+
+    <div class="launchpad-container">
+        
+        <!-- Header Section -->
+        <div class="header">
+            <h1>PwC SQLator</h1>
+            <p>Select an enterprise optimization workspace to begin:</p>
+
+            <!-- Model Selection Dropdown -->
+            <div class="model-selector-container">
+                <label for="modelSelect">AI Model Engine:</label>
+                <select id="modelSelect" class="model-select">  
+                    <option value="gemini-3.7-flash">gemini-3.7-flash</option>
+                    <option value="gemini-3.6-flash">gemini-3.6-flash</option>
+                    <option value="gemini-3.5-flash">gemini-3.5-flash</option>
+                    <option value="gemini-3.5-flash-lite">gemini-3.5-flash-lite</option>
+                    <option value="gemini-3.1-flash-lite">gemini-3.1-flash-lite</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Horizontal Cards Layout -->
+        <div class="cards-grid">
+            
+            <!-- Option 1: Fusion & EBS -->
+            <a href="fusion-ebs" class="card">
+                <div class="icon-badge">
+                    <svg viewBox="0 0 24 24">
+                        <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                        <path d="M3 5V19A9 3 0 0 0 21 19V5"></path>
+                        <path d="M3 12A9 3 0 0 0 21 12"></path>
+                    </svg>
+                </div>
+                <div class="card-title">Generate and Optimize Fusion/EBS Queries</div>
+                <div class="card-desc">Oracle Fusion Cloud Applications and EBS R12 schema query generation and performance tuning.</div>
+                <div class="card-btn">Launch</div>
+            </a>
+
+            <!-- Option 2: PaaS 
+            <a href="/paas" class="card">
+                <div class="icon-badge">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M17.5 19c2.485 0 4.5-2.015 4.5-4.5S19.985 10 17.5 10c-1.397 0-2.65.63-3.486 1.62C13.12 9.42 11.16 8 9 8 5.686 8 3 10.686 3 14s2.686 6 6 6"></path>
+                        <line x1="9" y1="19" x2="16" y2="19"></line>
+                        <line x1="9" y1="15" x2="16" y2="15"></line>
+                    </svg>
+                </div>
+                <div class="card-title">Generate and Optimize PaaS Query</div>
+                <div class="card-desc">Performance optimization workspace tailored for Autonomous Database (ATP/ADW) and PaaS instances.</div>
+                <div class="card-btn">Launch</div>
+            </a>
+
+            <!-- Option 3: SQL Package Generator 
+            <a href="/sql-package" class="card">
+                <div class="icon-badge">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M21 8l-9 5-9-5 9-5 9 5z"></path>
+                        <path d="M3 8v8l9 5 9-5V8"></path>
+                        <path d="M12 13v10"></path>
+                    </svg>
+                </div>
+                <div class="card-title">AI Package Generator</div>
+                <div class="card-desc">Automated PL/SQL package development workspace designed to generate production-ready package specifications and bodies.</div>
+                <div class="card-btn">Launch</div>
+            </a>
+            -->
+
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <div class="footer">
+        Developed by PwC India
+    </div>
+
+    <script src="/static/js/index.js"></script>
+</body>
+</html>
