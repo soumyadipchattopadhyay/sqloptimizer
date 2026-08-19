@@ -4,3 +4,4 @@ jinja2
 sqlglot
 google-genai
 python-dotenv
+oracledb
