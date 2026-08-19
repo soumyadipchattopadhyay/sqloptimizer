@@ -34,7 +34,8 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: var(--bg-main);
+    background-color: #F8F8EE;
+    background: radial-gradient(circle at top right, #ffb68f 0%, #fff0e8 45%, #ffffff 100%);
     color: var(--text-main);
     font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
     display: flex;
