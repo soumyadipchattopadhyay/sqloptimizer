@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PwC SQLator - EBS Live Execution</title>
+    <link rel="icon" type="image/png" href="/static/images/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
+    <link rel="stylesheet" href="/static/css/ebs_query.css">
+</head>
+<body>
+
+    <!-- Top Nav -->
+    <header class="top-nav">
+        <div class="nav-left">
+            <a href="/" class="back-btn">🏠︎</a>
+           
+        </div>
+         <h2>Live Database Execution Workspace</h2>
+        <div class="nav-right">
+            <span id="connectionStatus" class="status-badge disconnected">Disconnected</span>
+        </div>
+    </header>
+
+    <!-- SECTION 1: Connection Form Overlay -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-card">
+            <img src="/static/images/logo.png" alt="PwC Logo" class="login-logo">
+            <h3>Connect to Oracle Database</h3>
+            
+            <div class="input-group">
+                <label>Database User</label>
+                <input type="text" id="dbUser" placeholder="e.g., APPS">
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="dbPassword" placeholder="••••••••">
+            </div>
+            <div class="input-group">
+                <label>Host / DSN</label>
+                <input type="text" id="dbHost" placeholder="e.g., erp-db.example.com">
+            </div>
+            <div class="row-group">
+                <div class="input-group" style="flex: 1;">
+                    <label>Port</label>
+                    <input type="number" id="dbPort" value="1521">
+                </div>
+                <div class="input-group" style="flex: 2;">
+                    <label>Service Name</label>
+                    <input type="text" id="dbService" placeholder="e.g., VIS">
+                </div>
+            </div>
+            <button id="connectBtn" class="btn btn-primary-full">Connect Database</button>
+            <div id="loginError" class="error-msg"></div>
+        </div>
+    </div>
+
+    <!-- SECTION 2: Workspace (Hidden initially) -->
+    <div class="workspace-container hidden" id="workspaceContainer">
+        
+        <!-- Top Half: Editor -->
+        <div class="editor-pane" id="editorPane">
+            <div class="toolbar">
+                <button class="btn btn-primary" id="runQueryBtn">▶ Run Query</button>
+                <button class="btn btn-dark" id="explainPlanBtn">Generate Explain Plan</button>
+                <button class="btn btn-outline" id="clearBtn">Clear</button>
+            </div>
+            <div class="code-editor-wrapper">
+                <textarea id="sqlCodeEditor"></textarea>
+            </div>
+        </div>
+
+        <!-- Resizer -->
+        <div class="resizer-horizontal" id="horizontalResizer"></div>
+
+        <!-- Bottom Half: Results -->
+        <div class="results-pane" id="resultsPane">
+            <div class="tabs">
+                <div class="tab active" data-target="resultsTab">Query Results</div>
+                <div class="tab" data-target="explainTab">Explain Plan</div>
+                <span class="query-time" id="queryTime"></span>
+            </div>
+            
+            <div class="tab-content-container">
+                <!-- Data Table -->
+                <div class="tab-content active" id="resultsTab">
+                    <div class="table-scroll-container">
+                        <table id="resultsTable">
+                            <thead><tr id="tableHeaders"></tr></thead>
+                            <tbody id="tableBody"></tbody>
+                        </table>
+                        <div id="resultsMessage" class="placeholder-text">Run a query to see results here. (Limited to 100 rows)</div>
+                    </div>
+                </div>
+
+                <!-- Explain Plan output -->
+                <div class="tab-content" id="explainTab">
+                    <pre id="explainPlanOutput" class="explain-text">Generate an explain plan to see execution details.</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/sql/sql.min.js"></script>
+    <script src="/static/js/ebs_query.js"></script>
+</body>
+</html>
