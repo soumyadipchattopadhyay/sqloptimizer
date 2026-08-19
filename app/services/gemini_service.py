@@ -11,7 +11,7 @@ DEFAULT_GEMINI_MODEL = "gemini-3.6-flash"
 
 # Initialize the GenAI Client
 # Automatically picks up GEMINI_API_KEY from the environment
-client = genai.Client(api_key = 'AQ.Ab8RN6LCXzcbt2vq9l4fQwBh4y7ZTwW8ccJtXkBZ_VTFIFFCNA')
+client = genai.Client()
 
 def resolve_model_name(req_model: str) -> str:
     """
